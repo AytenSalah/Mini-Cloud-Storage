@@ -1,6 +1,6 @@
 #if !defined(FileMetaData_h)
 #define FileMetaData_h
-#include <nlohmann/json.hpp>
+
 #include <ctime>
 #include <string>
 
@@ -11,9 +11,9 @@ struct FileMetaData
     std::string fileId;
     size_t fileSize;
     std::time_t uploadTime;
- 
+
     using json = nlohmann::json;
-    
+
     json toJson() const
     {
         return json

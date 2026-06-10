@@ -62,10 +62,11 @@ void FileRepository::saveFiles(const std::vector<FileMetaData>& files)
     }
     
     std::ofstream file("metadata.json");
-    if(file.is_open())
+    if(!file.is_open())
     {
-        file << jsonArray.dump(4);
+       throw std::runtime_error("Cannot write to metadata.json");
     }
+    out << jsonArray.dump(4);
 }
 
 void FileRepository::save(const FileMetaData& file)
@@ -84,11 +85,19 @@ void FileRepository::deleteAll()
 void FileRepository::deleteById(const std::string& id)
 {
     auto files = loadAll();
+    auto before = files.size();
+
     files.erase(
-        std::remove_if(files.begin(), files.end(),[&id](const FileMetaData& f) { return f.fileId == id; }),
+        std::remove_if(files.begin(), files.end(),
+            [&id](const FileMetaData& f){ return f.fileId == id; }),
         files.end()
     );
+
+    if(files.size() == before)
+        throw std::runtime_error("File not found: " + id);
+
     saveFiles(files);
+
 }
 
 

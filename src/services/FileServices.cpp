@@ -28,6 +28,12 @@ FileServices::FileService(FileRepository& repo)
     std::filesystem::create_directories("Uploads");
 }
 
+std::string FileServices::generateUniqueId()
+{}
+void FileServices::writeToFolder(const std::string& path, const std::string& data)
+{}
+
+
 FileMetaData FileServices::uploadFile(const std::string& name , const std::string& fileData)
 {
     if(name.empty())
@@ -59,7 +65,3 @@ void FileServices::deleteAllFiles()
 {}
 
 
-std::string FileServices::generateUniqueId()
-{}
-void FileServices::writeToFolder(const std::string& path, const std::string& data)
-{}
